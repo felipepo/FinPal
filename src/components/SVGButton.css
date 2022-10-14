@@ -1,0 +1,14 @@
+.button-add-transaction line,
+.approve-button line {
+    stroke-width: 2px;
+    stroke: black;
+}
+
+.button-add-transaction {
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+    border: 1px solid gray;
+    box-shadow: 2px 2px black;
+}

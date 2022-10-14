@@ -1,0 +1,22 @@
+.add-transaction-window {
+    position: absolute;
+    z-index: 2;
+    background-color: rgb(221, 221, 221);
+    height: 50%;
+    width: 90%;
+    left: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 6px;
+    padding: 2%;
+}
+
+.transaction-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-field {
+    width: 80%;
+}
