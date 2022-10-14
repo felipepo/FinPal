@@ -1,5 +1,6 @@
 .button-add-transaction line,
-.approve-button line {
+.approve-button line,
+.show-sidemenu-button  {
     stroke-width: 2px;
     stroke: black;
 }
@@ -10,5 +11,11 @@
     bottom: 5%;
     right: 10%;
     border: 1px solid gray;
-    box-shadow: 2px 2px black;
+}
+
+.show-sidemenu-button {
+    z-index: 3;
+    position: absolute;
+    top: 5%;
+    left: 5%;
 }

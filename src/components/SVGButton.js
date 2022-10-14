@@ -2,12 +2,13 @@ import React from 'react';
 import './SVGButton.css';
 
 export const Approve = ({ setShowWindow, addTransaction }) => {
-    const onApprove = () => {
+    const onApprove = (event) => {
+        event.preventDefault();
         setShowWindow(false);
         addTransaction();
     }
     return (
-        <button className='approve-button' onClick={() => onApprove()}>
+        <button className='approve-button' onClick={(event) => onApprove(event)}>
             <svg height="30" width="30">
                 <line x1="3" y1="20" x2="12" y2="28" />
                 <line x1="12" y1="28" x2="27" y2="8" />
@@ -17,8 +18,12 @@ export const Approve = ({ setShowWindow, addTransaction }) => {
 }
 
 export const Cancel = ({ setShowWindow }) => {
+    const onCancel = (event) => {
+        event.preventDefault();
+        setShowWindow(false);
+    }
     return (
-        <button className='approve-button' onClick={() => setShowWindow(false)}>
+        <button className='approve-button' onClick={(event) => onCancel(event)}>
             <svg height="30" width="30">
                 <line x1="0" y1="30" x2="30" y2="0" />
                 <line x1="0" y1="0" x2="30" y2="30" />
@@ -28,8 +33,12 @@ export const Cancel = ({ setShowWindow }) => {
 }
 
 function NewButton({ setShowWindow }) {
+    const onButtonClick = (event) => {
+        event.preventDefault();
+        setShowWindow(true);
+    }
     return (
-        <button className='button-add-transaction' onClick={() => setShowWindow(true)}>
+        <button className='button-add-transaction' onClick={(event) => onButtonClick(event)}>
             <svg height="56" width="56">
                 <line x1="14" y1="28" x2="42" y2="28" />
                 <line x1="28" y1="14" x2="28" y2="42" />

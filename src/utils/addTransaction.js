@@ -9,21 +9,23 @@ export const addTransaction = (transaction) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(transaction)
     };
-    fetch('http://localhost:3001/', requestOptions);
+    console.log(requestOptions)
+    console.log(transaction)
+    fetch('https://finpal-backend.herokuapp.com/transactions', requestOptions);
 }
 
 export const createMockData = () => {
     const types = ['expense', 'income'];
     const categories = ['Aluguel', 'Luz', 'Telefone', 'Transporte', 'Feira', 'Bar'];
     const isinvest = [true, false];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
 
         const transaction = {
             "type": types[randomNumberInRange(0, 1)],
             "value": randomNumberInRange(1, 50),
             "date": "10/10/2020",
             "category": categories[randomNumberInRange(0, 5)],
-            "comment": "",
+            "comment": "as",
             "isInvestment": isinvest[randomNumberInRange(0, 1)]
         }
         addTransaction(transaction);
