@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SideMenu.css';
+import { NavLink } from 'react-router-dom';
 
 function SideMenu() {
     const [showMenu, setShowMenu] = useState(false);
@@ -22,7 +23,7 @@ function SideMenu() {
             </button>
             <div style={{ 'visibility': showMenu ? 'visible' : 'hidden' }} className='sidemenu-background' onClick={closePopup}>
                 <div className='sidemenu'>
-                    <div>Categorias</div>
+                    <NavLink to='category' onClick={() => setShowMenu(false)}>Categorias</NavLink>
                     <div>Exportar/Importar</div>
                     <div>Configurações</div>
                     <div>Ajuda</div>

@@ -1,0 +1,26 @@
+.history-page {
+    width: 100%;
+    text-align: center;
+    height: 100%;
+}
+
+.history-item {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 5px auto;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.hist-item-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.hist-item-container {
+    overflow: auto;
+    height: 80%
+}

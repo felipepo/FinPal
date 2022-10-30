@@ -1,11 +1,11 @@
 import React from 'react';
 import './SVGButton.css';
 
-export const Approve = ({ setShowWindow, addTransaction }) => {
+export const Approve = ({ setShowWindow, approvalCallback }) => {
     const onApprove = (event) => {
         event.preventDefault();
         setShowWindow(false);
-        addTransaction();
+        approvalCallback();
     }
     return (
         <button className='approve-button' onClick={(event) => onApprove(event)}>

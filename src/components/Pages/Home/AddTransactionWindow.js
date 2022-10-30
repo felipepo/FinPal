@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { LoginContext } from '../../../contexts/LoginContext';
+import { postTransaction } from '../../../utils/apiGateway';
 import './AddTransactionWindow.css';
-import { Approve, Cancel } from './SVGButton';
-import { addTransaction, createMockData } from '../utils/addTransaction';
+import { Approve, Cancel } from '../../General/SVGButton';
+import Transaction from '../../../classes/Transaction';
 
 const LabeledEditBox = ({ label, placeholder = '', value, setValue }) => {
 
@@ -13,32 +15,31 @@ const LabeledEditBox = ({ label, placeholder = '', value, setValue }) => {
     )
 }
 
-function AddTransactionWindow({ showWindow, setShowWindow, getAPIData }) {
+function AddTransactionWindow({ setShowWindow, refreshPage }) {
     const [value, setValue] = useState('');
     const [date, setDate] = useState('');
     const [type, setType] = useState('income');
     const [category, setCategory] = useState('Outros');
     const [comment, setComment] = useState('');
     const [isInvestment, setIsInvestment] = useState(false);
+    const { userAuth } = useContext(LoginContext);
 
     const approveCallback = () => {
-        const transaction = {
-            value: parseInt(value),
+        const transaction = Transaction(
             type,
+            value,
             date,
             category,
             comment,
-            isInvestment
-        };
-        addTransaction(transaction);
-        // let tempByType = { ...byType };
-        // tempByType[type] = tempByType[type] + transaction['value'];
-        // setByType(tempByType);
-        getAPIData();
+            isInvestment,
+            userAuth.id
+        );
+        postTransaction(transaction);
+        refreshPage();
     }
 
     return (
-        <form style={{ visibility: showWindow ? 'visible' : 'hidden' }} className='add-transaction-window'>
+        <form className='add-transaction-window'>
             <LabeledEditBox label='Valor' value={value} setValue={setValue} placeholder='R$ 99' />
             <div className='transaction-field'>
                 <label >Tipo</label>
@@ -47,7 +48,7 @@ function AddTransactionWindow({ showWindow, setShowWindow, getAPIData }) {
                     <option value="expense">Despesa</option>
                 </select>
             </div>
-            <LabeledEditBox label='Data' value={date} setValue={setDate} placeholder='10/10/10' />
+            <LabeledEditBox label='Data' value={date} setValue={setDate} placeholder='10/10/2010' />
             <div className='transaction-field'>
                 <label >Categoria</label>
                 <select value={category} onChange={(event) => setCategory(event.target.value)}>

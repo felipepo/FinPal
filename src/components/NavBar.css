@@ -7,3 +7,20 @@
     align-items: center;
     border-top: 1px solid gray;
 }
+
+.navbar a {
+    display: block;
+    width: 20%;
+}
+
+.navbar-page-selected {
+    background-color: rgb(219, 219, 219);
+}
+
+.navbar-page,
+.navbar-page-selected {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

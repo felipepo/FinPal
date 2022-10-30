@@ -1,0 +1,19 @@
+.pagination {
+    display: flex;
+    gap: 8px;
+}
+
+.selected-page,
+.not-selected-page {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.selected-page {
+    background-color: black;
+}
+
+.not-selected-page {
+    background-color: gray;
+}

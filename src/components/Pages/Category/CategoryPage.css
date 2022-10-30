@@ -1,0 +1,25 @@
+.categories-page {
+    text-align: center;
+    width: 100%;
+}
+
+.cat-item-container {
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40%;
+}
+
+.cat-item {
+    display: flex;
+    gap: 20px;
+}
+
+.cat-name {}
+
+.cat-color {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}

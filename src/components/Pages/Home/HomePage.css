@@ -12,9 +12,17 @@
 .homepage-summary {
     margin: auto;
     width: 50%;
+    height: 200px;
+    overflow: auto;
 }
 
 .homepage-summary>div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.key-value-pair {
     display: flex;
     justify-content: space-between;
     gap: 10px;
