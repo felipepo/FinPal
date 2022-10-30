@@ -68,13 +68,12 @@ function HomePage() {
         setIsLoading(true);
 
         const jsonResponse = userData.transactions;
-        console.log(userData)
         parseTransactions(jsonResponse);
 
         setIsLoading(false);
     }, 
     // eslint-disable-next-line
-    []);
+    [userData]);
 
     return (
         <div className="homepage">

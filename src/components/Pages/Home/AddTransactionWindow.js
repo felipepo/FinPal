@@ -25,7 +25,7 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
     const { userAuth } = useContext(LoginContext);
 
     const approveCallback = () => {
-        const transaction = Transaction(
+        const transaction = new Transaction(
             type,
             value,
             date,
@@ -34,7 +34,7 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
             isInvestment,
             userAuth.id
         );
-        postTransaction(transaction);
+        postTransaction(userAuth.token, transaction);
         refreshPage();
     }
 
@@ -64,7 +64,7 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
                 <span>Investimento</span>
             </label>
             <div>
-                <Approve setShowWindow={setShowWindow} addTransaction={approveCallback} />
+                <Approve setShowWindow={setShowWindow} approvalCallback={approveCallback} />
                 <Cancel setShowWindow={setShowWindow} />
             </div>
         </form>

@@ -2,11 +2,13 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getAllData, loginUser, postCategory, registerUser } from '../../../utils/apiGateway';
 import './LoginPage.css';
+import LoadingWindow from '../../General/LoadingWindow';
 import { LoginContext } from '../../../contexts/LoginContext';
 
 function LoginPage() {
-    const [email, setEmail] = useState('felipegomespontes@hotmail.com');
-    const [password, setPassword] = useState('felipepo');
+    const [isLoading, setIsLoading] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
     const [requestResult, setRequestResult] = useState('');
@@ -17,6 +19,7 @@ function LoginPage() {
 
     const loginCallback = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         const { apiData, jsonResponse } = await loginUser(email, password);
         setRequestResult(jsonResponse.msg);
@@ -25,6 +28,7 @@ function LoginPage() {
             const updatedUserData = await getAllData(jsonResponse.id, jsonResponse.token);
             setUserData(updatedUserData);
             setUserAuth({ id: jsonResponse.id, token: jsonResponse.token })
+            setIsLoading(false);
             return navigate("/home");
         }
     }
@@ -33,7 +37,7 @@ function LoginPage() {
         event.preventDefault();
 
         const { apiData, jsonResponse } = await registerUser(username, email, password, confirmpassword);
-        
+
         if (apiData.status === 201) {
             postCategory(jsonResponse.token, { name: "Aluguel", color: "asd", userID: jsonResponse.userID });
             postCategory(jsonResponse.token, { name: "Luz", color: "asd", userID: jsonResponse.userID });
@@ -50,6 +54,7 @@ function LoginPage() {
     return (
         inlogin
             ? <div className='loginpage'>
+                <LoadingWindow isLoading={isLoading} positionLeft='23%' positionTop='30%' loadingText='Loading...' />
                 <form onSubmit={(event) => loginCallback(event)} >
                     <input className='login-editbox' value={email} onChange={(event) => setEmail(event.target.value)} placeholder='email' type='text' />
                     <input className='login-editbox' value={password} onChange={(event) => setPassword(event.target.value)} placeholder='password' type='text' />

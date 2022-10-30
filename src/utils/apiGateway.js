@@ -1,6 +1,6 @@
 
-// const baseURL = 'https://finpal-backend.herokuapp.com';
-const baseURL = 'http://localhost:3000';
+const baseURL = 'https://finpal-backend.herokuapp.com';
+// const baseURL = 'http://localhost:3000';
 
 async function fetchAPI(headerOptions, body, method, uri) {
     const myHeaders = new Headers(headerOptions);

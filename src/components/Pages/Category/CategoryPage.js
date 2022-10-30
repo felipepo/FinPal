@@ -110,6 +110,10 @@ function CategoryPage() {
         }
     }, []);
 
+    //TODO: Show message when trying to create a category that already exists
+    //TODO: Loading window when opening Homepage
+    //TODO: Fix Update Category Window!
+
     return (
         <div className='categories-page'>
             <h1>Categorias</h1>
