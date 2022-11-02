@@ -1,34 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { LoginContext } from '../../../contexts/LoginContext';
 import './OverviewPage.css';
-import Pagination from './Pagination';
+import Pagination from '../../General/Pagination';
 
 function OverviewPage() {
-    const [selected, setSelected] = useState(0);
+    const { userAuth, userData } = useContext(LoginContext);
     const navigate = useNavigate();
-    const switchPage = () => {
-        switch (selected) {
-            case 0:
-                navigate("/overview/info");
-                break;
-            case 1:
-                navigate("/overview/charts");
-                break;
-            case 2:
-                navigate("/overview/history");
-                break;
+    const pages = [
+        "/overview/info",
+        "/overview/charts",
+        "/overview/history",
+    ]
 
-            default:
-                break;
+    useEffect(() => {
+        if (userAuth.id === '') {
+            return navigate("/");
         }
-    }
-
-    useEffect(()=> switchPage(), [selected]);
+    }, []);
 
     return (
         <div className='overview'>
             <Outlet />
-            <Pagination nPages={3} selected={selected} setSelected={setSelected} />
+            <Pagination pages={pages} />
         </div>
     );
 }

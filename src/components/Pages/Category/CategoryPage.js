@@ -8,6 +8,7 @@ import { Approve, Cancel } from '../../General/SVGButton';
 import Category from '../../../classes/Category';
 import { SketchPicker } from 'react-color';
 import { useNavigate } from 'react-router-dom';
+import { randomNumberInRange } from '../../../utils/addTransaction';
 
 const LabeledEditBox = ({ label, placeholder = '', value, setValue }) => {
 
@@ -46,25 +47,27 @@ function UpdateCategoryWindow({ initName = '', initColor = { r: 0, g: 0, b: 0, a
     );
 }
 
-function AddCategoryWindow({ setShowWindow, refreshPage }) {
+function AddCategoryWindow({ showWindow, setShowWindow, refreshPage }) {
     const [name, setName] = useState('');
-    const [color, setColor] = useState({ r: 0, g: 0, b: 0, a: 100 });
+    const [catColor, setCatColor] = useState({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) });
     const { userAuth } = useContext(LoginContext);
 
     function handleChangeComplete(color) {
-        setColor(color.rgb)
+        setCatColor(color.rgb);
     }
 
     const approveCallback = () => {
-        const category = new Category(color, name, userAuth.id);
+        const category = new Category(catColor, name, userAuth.id);
         postCategory(userAuth.token, category);
         refreshPage();
     }
 
+    useEffect(() => setCatColor({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), [showWindow])
+
     return (
-        <form className='add-transaction-window'>
+        <form className='add-category-window'>
             <LabeledEditBox label='Nome' value={name} setValue={setName} placeholder='Categoria' />
-            <SketchPicker onChangeComplete={handleChangeComplete} color={color} presetColors={[]} />
+            <SketchPicker onChangeComplete={handleChangeComplete} color={catColor} presetColors={[]} />
             <div>
                 <Approve setShowWindow={setShowWindow} approvalCallback={approveCallback} />
                 <Cancel setShowWindow={setShowWindow} />
@@ -80,7 +83,7 @@ function CategoryItem({ name, color, refreshPage }) {
 
     const onButtonClick = (event) => {
         event.preventDefault();
-        setShowUpdWindow(true);
+        if(!showUpdWindow) setShowUpdWindow(true);
     }
 
     return (
@@ -118,7 +121,7 @@ function CategoryPage() {
         <div className='categories-page'>
             <h1>Categorias</h1>
             <PopupWindow showWindow={showWindow} setShowWindow={setShowWindow}>
-                <AddCategoryWindow setShowWindow={setShowWindow} refreshPage={refreshPage} />
+                <AddCategoryWindow showWindow={showWindow} setShowWindow={setShowWindow} refreshPage={refreshPage} />
             </PopupWindow>
             <div className='cat-item-container'>
                 {userData.categories.map((category) => <CategoryItem key={category.name} name={category.name} color={category.color} refreshPage={refreshPage} />)}

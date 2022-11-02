@@ -1,0 +1,35 @@
+.overview-info-page{
+    width: 100%;
+    text-align: center;
+    height: 100%;
+}
+
+.overview-info-container{
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 85%;
+}
+
+.info-item-container {
+    border: 1px solid black;
+}
+
+.info-item-container>h2 {
+    text-align: left;
+    padding: 5px 20px;
+    margin: 0px;
+}
+
+.overview-info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+}
+
+.overview-info-pair {
+    display: flex;
+}

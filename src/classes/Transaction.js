@@ -3,7 +3,7 @@ class Transaction {
         this.type = type;
         this.value = parseInt(value);
         this.date = date;
-        this.category = category;
+        this.category = category.normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
         this.comment = comment;
         this.isInvestment = isInvestment;
         this.userID = id;

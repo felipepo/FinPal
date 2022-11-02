@@ -4,6 +4,7 @@ import { getAllData, loginUser, postCategory, registerUser } from '../../../util
 import './LoginPage.css';
 import LoadingWindow from '../../General/LoadingWindow';
 import { LoginContext } from '../../../contexts/LoginContext';
+import { randomNumberInRange } from '../../../utils/addTransaction';
 
 function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +32,7 @@ function LoginPage() {
             setIsLoading(false);
             return navigate("/home");
         }
+        setIsLoading(false);
     }
 
     const registerCallback = async (event) => {
@@ -39,14 +41,14 @@ function LoginPage() {
         const { apiData, jsonResponse } = await registerUser(username, email, password, confirmpassword);
 
         if (apiData.status === 201) {
-            postCategory(jsonResponse.token, { name: "Aluguel", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Luz", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Telefone", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Água", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Gás", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Internet", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Feira", color: "asd", userID: jsonResponse.userID });
-            postCategory(jsonResponse.token, { name: "Transporte", color: "asd", userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Aluguel", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Luz", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Telefone", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Água", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Gás", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Internet", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Feira", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
+            postCategory(jsonResponse.token, { name: "Transporte", color: JSON.stringify({ r: randomNumberInRange(0, 255), g: randomNumberInRange(0, 255), b: randomNumberInRange(0, 255), a: (randomNumberInRange(30, 100) / 100) }), userID: jsonResponse.userID });
         }
         setRequestResult(jsonResponse.msg);
     }
@@ -54,7 +56,7 @@ function LoginPage() {
     return (
         inlogin
             ? <div className='loginpage'>
-                <LoadingWindow isLoading={isLoading} positionLeft='23%' positionTop='30%' loadingText='Loading...' />
+                <LoadingWindow isLoading={isLoading} positionLeft='23%' positionTop='30%' loadingText='Logging in...' />
                 <form onSubmit={(event) => loginCallback(event)} >
                     <input className='login-editbox' value={email} onChange={(event) => setEmail(event.target.value)} placeholder='email' type='text' />
                     <input className='login-editbox' value={password} onChange={(event) => setPassword(event.target.value)} placeholder='password' type='text' />

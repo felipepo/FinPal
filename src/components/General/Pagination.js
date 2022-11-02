@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Pagination.css';
 
-function Pagination({ nPages, selected, setSelected }) {
+function Pagination({ pages }) {
+    const [selected, setSelected] = useState(0);
+    const navigate = useNavigate();
+
     const changePage = (event) => {
         event.preventDefault();
 
@@ -10,9 +14,14 @@ function Pagination({ nPages, selected, setSelected }) {
         event.target.className = 'selected-page';
         setSelected(parseInt(event.target.dataset.page))
     }
+
+    useEffect(() => {
+        navigate(pages[selected]);
+    }, [selected]);
+
     return (
         <div className='pagination'>
-            {[...Array(nPages).keys()].map((value, index) => <div key={value} onClick={(event) => changePage(event)} data-page={value} className={index === selected ? 'selected-page' : 'not-selected-page'}></div>)}
+            {pages.map((value, index) => <div key={value} onClick={(event) => changePage(event)} data-page={index} className={index === selected ? 'selected-page' : 'not-selected-page'}></div>)}
         </div>
     );
 }

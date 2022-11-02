@@ -14,6 +14,8 @@ import OverviewCharts from './Pages/Overview/OverviewCharts';
 import OverviewHistory from './Pages/Overview/OverviewHistory';
 import LoginProvider, { LoginContext } from '../contexts/LoginContext';
 import CategoryPage from './Pages/Category/CategoryPage';
+import CalculatorGeneral from './Pages/Calculator/CalculatorGeneral';
+import CalculatorInterest from './Pages/Calculator/CalculatorInterest';
 
 function App() {
   return (
@@ -38,14 +40,17 @@ function AppNoLoginProvider() {
             <Route path='history' element={<OverviewHistory />} />
           </Route>
           <Route path='budget' element={<BudgetPage />} />
-          <Route path='calculator' element={<CalculatorPage />} />
+          <Route path='calculator' element={<CalculatorPage />} >
+            <Route path='general' element={<CalculatorGeneral />} />
+            <Route path='interests' element={<CalculatorInterest />} />
+          </Route>
           <Route path='investment' element={<InvestmentPage />} />
           <Route path='category' element={<CategoryPage />} />
         </Routes>
 
         {userAuth.id !== "" && <NavBar />}
       </HashRouter>
-    </div>
+    </div >
   );
 }
 

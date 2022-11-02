@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { LoginContext } from '../../../contexts/LoginContext';
 import { postTransaction } from '../../../utils/apiGateway';
 import './AddTransactionWindow.css';
@@ -22,7 +22,7 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
     const [category, setCategory] = useState('Outros');
     const [comment, setComment] = useState('');
     const [isInvestment, setIsInvestment] = useState(false);
-    const { userAuth } = useContext(LoginContext);
+    const { userAuth, userData} = useContext(LoginContext);
 
     const approveCallback = () => {
         const transaction = new Transaction(
@@ -34,9 +34,15 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
             isInvestment,
             userAuth.id
         );
+        console.log(transaction)
         postTransaction(userAuth.token, transaction);
         refreshPage();
     }
+
+    useEffect(() => {
+        const today = new Date();
+        setDate(`${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`)
+    }, []);
 
     return (
         <form className='add-transaction-window'>
@@ -52,11 +58,7 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
             <div className='transaction-field'>
                 <label >Categoria</label>
                 <select value={category} onChange={(event) => setCategory(event.target.value)}>
-                    <option value="Luz">Luz</option>
-                    <option value="Outros">Outros</option>
-                    <option value="Aluguel">Aluguel</option>
-                    <option value="Telefone">Telefone</option>
-                    <option value="Internet">Internet</option>
+                    {userData.categories.map((cat) => <option key={cat.name} value={cat.name}>{cat.name}</option>)}
                 </select>
             </div>
             <LabeledEditBox label='Comentário' value={comment} setValue={setComment} placeholder='Escreva comentário aqui' />
