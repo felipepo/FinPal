@@ -4,7 +4,7 @@ class Transaction {
         this.value = parseInt(value);
         this.date = date;
         this.category = category.normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
-        this.comment = comment;
+        this.comment = comment.replace(/char(44)/g, ',');
         this.isInvestment = isInvestment;
         this.userID = id;
     }

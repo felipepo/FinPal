@@ -16,6 +16,7 @@ import LoginProvider, { LoginContext } from '../contexts/LoginContext';
 import CategoryPage from './Pages/Category/CategoryPage';
 import CalculatorGeneral from './Pages/Calculator/CalculatorGeneral';
 import CalculatorInterest from './Pages/Calculator/CalculatorInterest';
+import CSVControl from './Pages/CSVControl/CSVControl';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function AppNoLoginProvider() {
           </Route>
           <Route path='investment' element={<InvestmentPage />} />
           <Route path='category' element={<CategoryPage />} />
+          <Route path='export_import' element={<CSVControl />} />
         </Routes>
 
         {userAuth.id !== "" && <NavBar />}

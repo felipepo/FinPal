@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './CalculatorPage.css';
 import Pagination from '../../General/Pagination';
 import { LoginContext } from '../../../contexts/LoginContext';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 function CalculatorPage() {
-    const { userAuth, userData } = useContext(LoginContext);
+    const { userAuth } = useContext(LoginContext);
     const navigate = useNavigate();
     const pages = [
         "/calculator/general",
@@ -16,7 +16,9 @@ function CalculatorPage() {
         if (userAuth.id === '') {
             return navigate("/");
         }
-    }, []);
+    },
+        // eslint-disable-next-line
+        []);
 
     return (
         <div className='calculator-page'>

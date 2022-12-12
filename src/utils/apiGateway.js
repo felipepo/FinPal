@@ -1,5 +1,5 @@
 
-const baseURL = 'https://finpal-backend.herokuapp.com';
+const baseURL = 'https://finpal-backend.onrender.com';
 // const baseURL = 'http://localhost:3000';
 
 async function fetchAPI(headerOptions, body, method, uri) {
@@ -147,13 +147,73 @@ export async function patchCategory(initName, token, body) {
     const { apiData, jsonResponse } = await fetchAPI(headerOptions, body, 'PATCH', `${baseURL}/categories/${initName}`);
     return { apiData, jsonResponse };
 }
+// ===============================================================================================================================================
+// Budget CRUD ===============================================================================================================================================
+export async function getAllBudget(userID, token) {
+    const headerOptions = {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
+    };
+
+    const { apiData, jsonResponse } = await fetchAPI(headerOptions, {}, 'GET', `${baseURL}/budgets/all/${userID}`);
+    return { apiData, jsonResponse };
+}
+
+export async function getBudget(catID, token) {
+    const headerOptions = {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
+    };
+
+    const { apiData, jsonResponse } = await fetchAPI(headerOptions, {}, 'GET', `${baseURL}/budgets/${catID}`);
+    return { apiData, jsonResponse };
+}
+
+export async function postBudget(token, budget) {
+    const headerOptions = {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
+    };
+
+    const body = {
+        "category": budget.category,
+        "value": budget.value,
+        "userID": budget.userID,
+    };
+    
+    const { apiData, jsonResponse } = await fetchAPI(headerOptions, body, 'POST', `${baseURL}/budgets`);
+    return { apiData, jsonResponse };
+}
+
+export async function deleteBudget(catID, token) {
+    const headerOptions = {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
+    };
+
+    const { apiData, jsonResponse } = await fetchAPI(headerOptions, {}, 'DETELE', `${baseURL}/budgets/${catID}`);
+    return { apiData, jsonResponse };
+}
+
+export async function patchBudget(initName, token, body) {
+    const headerOptions = {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
+    };
+
+    const { apiData, jsonResponse } = await fetchAPI(headerOptions, body, 'PATCH', `${baseURL}/budgets/${initName}`);
+    return { apiData, jsonResponse };
+}
+// ===============================================================================================================================================
 
 export async function getAllData(userID, token) {
     const allTransactions = await getAllTransactions(userID, token);
     const allCategories = await getAllCategories(userID, token);
+    const allBudgets = await getAllBudget(userID, token);
 
     return {
         transactions: allTransactions.jsonResponse,
-        categories: allCategories.jsonResponse
+        categories: allCategories.jsonResponse,
+        budgets: allBudgets.jsonResponse,
     }
 }

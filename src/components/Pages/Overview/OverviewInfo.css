@@ -33,3 +33,11 @@
 .overview-info-pair {
     display: flex;
 }
+
+.overview-info-filter {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20%;
+    margin-bottom: 10px;
+    gap: 10px;
+}

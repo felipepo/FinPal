@@ -8,8 +8,8 @@ import { randomNumberInRange } from '../../../utils/addTransaction';
 
 function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('felipegomespontes@hotmail.com');
+    const [password, setPassword] = useState('felipepo');
     const [username, setUsername] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
     const [requestResult, setRequestResult] = useState('');
@@ -27,6 +27,14 @@ function LoginPage() {
 
         if (apiData.status === 200) {
             const updatedUserData = await getAllData(jsonResponse.id, jsonResponse.token);
+            updatedUserData.filteredTransactions = updatedUserData.transactions.filter((element) => {
+                const targetDate = new Date(element.date);
+                const today = new Date();
+                const sameMonth = (targetDate.getMonth() + 1) === (today.getMonth + 1);
+                const sameYear = targetDate.getFullYear() === today.getFullYear();
+                return sameMonth && sameYear;
+
+            });
             setUserData(updatedUserData);
             setUserAuth({ id: jsonResponse.id, token: jsonResponse.token })
             setIsLoading(false);

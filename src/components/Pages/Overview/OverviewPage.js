@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../../contexts/LoginContext';
 import './OverviewPage.css';
 import Pagination from '../../General/Pagination';
 
 function OverviewPage() {
-    const { userAuth, userData } = useContext(LoginContext);
+    const { userAuth } = useContext(LoginContext);
     const navigate = useNavigate();
     const pages = [
         "/overview/info",
@@ -17,7 +17,9 @@ function OverviewPage() {
         if (userAuth.id === '') {
             return navigate("/");
         }
-    }, []);
+    }
+        // eslint-disable-next-line
+        , []);
 
     return (
         <div className='overview'>

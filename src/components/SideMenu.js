@@ -24,7 +24,7 @@ function SideMenu() {
             <div style={{ 'visibility': showMenu ? 'visible' : 'hidden' }} className='sidemenu-background' onClick={closePopup}>
                 <div className='sidemenu'>
                     <NavLink to='category' onClick={() => setShowMenu(false)}>Categorias</NavLink>
-                    <div>Exportar/Importar</div>
+                    <NavLink to='export_import' onClick={() => setShowMenu(false)}>Exportar/Importar</NavLink>
                     <div>Configurações</div>
                     <div>Ajuda</div>
                     <div>Modo Escuro</div>

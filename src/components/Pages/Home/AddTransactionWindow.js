@@ -19,10 +19,10 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
     const [value, setValue] = useState('');
     const [date, setDate] = useState('');
     const [type, setType] = useState('income');
-    const [category, setCategory] = useState('Outros');
+    const [category, setCategory] = useState('Luz');
     const [comment, setComment] = useState('');
     const [isInvestment, setIsInvestment] = useState(false);
-    const { userAuth, userData} = useContext(LoginContext);
+    const { userAuth, userData } = useContext(LoginContext);
 
     const approveCallback = () => {
         const transaction = new Transaction(
@@ -34,14 +34,13 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
             isInvestment,
             userAuth.id
         );
-        console.log(transaction)
         postTransaction(userAuth.token, transaction);
         refreshPage();
     }
 
     useEffect(() => {
         const today = new Date();
-        setDate(`${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`)
+        setDate(`${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`);
     }, []);
 
     return (
@@ -62,7 +61,8 @@ function AddTransactionWindow({ setShowWindow, refreshPage }) {
                 </select>
             </div>
             <LabeledEditBox label='Comentário' value={comment} setValue={setComment} placeholder='Escreva comentário aqui' />
-            <label>                   <input type='checkbox' checked={isInvestment} onChange={() => setIsInvestment(!isInvestment)} />
+            <label>
+                <input type='checkbox' checked={isInvestment} onChange={() => setIsInvestment(!isInvestment)} />
                 <span>Investimento</span>
             </label>
             <div>
