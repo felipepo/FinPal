@@ -11,9 +11,10 @@
 
 .homepage-summary {
     margin: auto;
-    width: 50%;
+    width: 60%;
     height: 200px;
     overflow: auto;
+    padding: 0 20px;
 }
 
 .homepage-summary>div {

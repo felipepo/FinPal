@@ -9,8 +9,6 @@ export const addTransaction = (transaction) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(transaction)
     };
-    console.log(requestOptions)
-    console.log(transaction)
     fetch('https://finpal-backend.herokuapp.com/transactions', requestOptions);
 }
 

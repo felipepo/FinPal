@@ -66,9 +66,8 @@ function HomePage() {
             return navigate("/");
         }
         setIsLoading(true);
-
-        const jsonResponse = userData.transactions;
-        parseTransactions(jsonResponse);
+        
+        parseTransactions(userData.filteredTransactions);
 
         setIsLoading(false);
     }, 

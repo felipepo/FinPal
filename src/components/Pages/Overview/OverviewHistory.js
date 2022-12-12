@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../../contexts/LoginContext';
+import { FilterMonth, FilterYear, FilterCategory } from '../../General/Filters';
 import formatDate from '../../../utils/formatDate';
 import PopupWindow from '../../General/PopupWindow';
 import './OverviewHistory.css';
+import { getMonth_Transactions } from '../../../utils/filters';
 
 function TransactionInfoWindow({ transaction }) {
     return (
         <div className='transaction-info-window'>
             <div className='transaction-info-wndw-pair'>
                 <div className='transaction-info-wndw-key'>Valor</div>
-                <div className='transaction-info-wndw-value'>{transaction.value}</div>
+                <div className='transaction-info-wndw-value'>R$ {transaction.value}</div>
             </div>
             <div className='transaction-info-wndw-pair'>
                 <div className='transaction-info-wndw-key'>Data</div>
@@ -60,8 +62,17 @@ function HistoryItem({ transaction }) {
 
 function OverviewHistory() {
     const [histItems, setHistItems] = useState([]);
-    const { userAuth, userData } = useContext(LoginContext);
+    const [filters, setFilters] = useState({ year: 0, month: 0, category: "Todas" });
+    const { userAuth, userData, setUserData } = useContext(LoginContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const updUserData = { budgets: userData.budgets, categories: userData.categories, transactions: userData.transactions, filteredTransactions: getMonth_Transactions(filters.month, filters.year, userData.transactions) };
+        setUserData(updUserData);
+        setHistItems(updUserData.filteredTransactions.filter((element) => filters.category === "Todas" || element.category === filters.category));
+    },
+        // eslint-disable-next-line
+        [filters]);
 
     useEffect(() => {
         if (userAuth.id === '') {
@@ -76,6 +87,9 @@ function OverviewHistory() {
             return 0;
         });
         setHistItems(userData.filteredTransactions);
+        const today = new Date();
+        const filters = { month: today.getMonth() + 1, year: today.getFullYear(), category: "Todas" };
+        setFilters(filters);
     }
         // eslint-disable-next-line
         , []);
@@ -83,7 +97,11 @@ function OverviewHistory() {
     return (
         <div className='history-page'>
             <h1>Histórico</h1>
-            <div>Filtros</div>
+            <div className='overview-hist-filter'>
+                <FilterCategory filters={filters} setFilters={setFilters} />
+                <FilterMonth filters={filters} setFilters={setFilters} />
+                <FilterYear filters={filters} setFilters={setFilters} />
+            </div>
             <div className='hist-item-container'>
                 {histItems.map((transac, index) => <HistoryItem key={index} transaction={transac} />)}
             </div>

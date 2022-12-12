@@ -5,6 +5,7 @@ import './LoginPage.css';
 import LoadingWindow from '../../General/LoadingWindow';
 import { LoginContext } from '../../../contexts/LoginContext';
 import { randomNumberInRange } from '../../../utils/addTransaction';
+import { getMonth_Transactions } from '../../../utils/filters';
 
 function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -27,14 +28,8 @@ function LoginPage() {
 
         if (apiData.status === 200) {
             const updatedUserData = await getAllData(jsonResponse.id, jsonResponse.token);
-            updatedUserData.filteredTransactions = updatedUserData.transactions.filter((element) => {
-                const targetDate = new Date(element.date);
-                const today = new Date();
-                const sameMonth = (targetDate.getMonth() + 1) === (today.getMonth + 1);
-                const sameYear = targetDate.getFullYear() === today.getFullYear();
-                return sameMonth && sameYear;
-
-            });
+            const today = new Date();
+            updatedUserData.filteredTransactions = getMonth_Transactions((today.getMonth() + 1), today.getFullYear(), updatedUserData.transactions);
             setUserData(updatedUserData);
             setUserAuth({ id: jsonResponse.id, token: jsonResponse.token })
             setIsLoading(false);

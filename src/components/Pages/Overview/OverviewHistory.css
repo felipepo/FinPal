@@ -49,3 +49,11 @@
     gap: 10px;
     justify-content: flex-end;
 }
+
+.overview-hist-filter {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    gap: 10px;
+    width: 100%;
+}

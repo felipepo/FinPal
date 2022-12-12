@@ -17,7 +17,8 @@ export function FilterMonth({ filters, setFilters }) {
 
     return (
         <div>
-            <span>Mês: </span><select value={filterValue} onChange={(event) => setFilterValue(parseInt(event.target.value))}>
+            <span>Mês: </span>
+            <select value={filterValue} onChange={(event) => setFilterValue(parseInt(event.target.value))}>
                 <option value={1}>Jan</option>
                 <option value={2}>Fev</option>
                 <option value={3}>Mar</option>
@@ -52,11 +53,33 @@ export function FilterYear({ filters, setFilters }) {
 
     return (
         <div>
-            <span>Ano: </span><select value={filterValue} onChange={(event) => setFilterValue(parseInt(event.target.value))}>
+            <span>Ano: </span>
+            <select value={filterValue} onChange={(event) => setFilterValue(parseInt(event.target.value))}>
                 {userData.transactions
                     .map((element) => new Date(element.date).getFullYear())
                     .filter((value, index, arr) => arr.indexOf(value) === index)
                     .map((year) => <option key={year} value={year}>{year}</option>)}
+            </select>
+        </div>
+    )
+}
+
+export function FilterCategory({ filters, setFilters }) {
+    const [filterValue, setFilterValue] = useState("Todas");
+    const { userData } = useContext(LoginContext);
+
+    useEffect(() => {
+        setFilters({ ...filters, category: filterValue });
+    },
+        // eslint-disable-next-line
+        [filterValue]);
+
+    return (
+        <div>
+            <span>Categoria: </span>
+            <select value={filterValue} onChange={(event) => setFilterValue(event.target.value)}>
+                <option value="Todas">Todas</option>
+                {userData.categories.map((cat) => <option key={cat.name} value={cat.name}>{cat.name}</option>)}
             </select>
         </div>
     )
