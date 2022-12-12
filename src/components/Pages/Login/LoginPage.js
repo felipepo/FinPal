@@ -8,8 +8,8 @@ import { randomNumberInRange } from '../../../utils/addTransaction';
 
 function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState('felipegomespontes@hotmail.com');
-    const [password, setPassword] = useState('felipepo');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
     const [requestResult, setRequestResult] = useState('');
