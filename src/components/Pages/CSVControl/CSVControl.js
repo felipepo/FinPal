@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import Transaction from "../../../classes/Transaction";
 import { LoginContext } from "../../../contexts/LoginContext";
-import { postTransaction } from "../../../utils/apiGateway";
+import { postTransaction, getAllData } from "../../../utils/apiGateway";
 import { useNavigate } from 'react-router-dom';
+import LoadingWindow from "../../General/LoadingWindow";
 
 function CSVControl() {
     const [file, setFile] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     const [requestResult, setRequestResult] = useState('');
-    const { userAuth } = useContext(LoginContext);
+    const { userAuth, userData, setUserData } = useContext(LoginContext);
     const navigate = useNavigate();
 
     const fileReader = new FileReader();
@@ -16,7 +18,8 @@ function CSVControl() {
         setFile(e.target.files[0]);
     };
 
-    const csvFileToArray = string => {
+    const csvFileToArray = async string => {
+        setIsLoading(true);
         const csvHeader = string.slice(0, string.indexOf("\r\n")).split(",");
         const csvRows = string.slice(string.indexOf("\n") + 1).split("\r\n");
 
@@ -31,6 +34,11 @@ function CSVControl() {
             postTransaction(userAuth.token, transaction)
             return obj;
         });
+        const updatedUserData = await getAllData(userAuth.id, userAuth.token);
+        updatedUserData.filteredTransactions = userData.filteredTransactions;
+        setUserData(updatedUserData);
+
+        setIsLoading(false);
         setRequestResult('CSV Imported');
     };
 
@@ -57,6 +65,7 @@ function CSVControl() {
 
     return (
         <div style={{ textAlign: "center" }}>
+            <LoadingWindow isLoading={isLoading} positionLeft='23%' positionTop='30%' loadingText='Importing...' />
             <h1>REACTJS CSV IMPORT EXAMPLE </h1>
             <form>
                 <input

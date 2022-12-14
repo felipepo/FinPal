@@ -54,6 +54,7 @@ function HomePage() {
         setIsLoading(true);
 
         const updatedUserData = await getAllData(userAuth.id, userAuth.token);
+        updatedUserData.filteredTransactions = userData.filteredTransactions;
         const jsonResponse = updatedUserData.transactions;
         parseTransactions(jsonResponse);
 

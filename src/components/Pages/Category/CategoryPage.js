@@ -104,6 +104,7 @@ function CategoryPage() {
 
     async function refreshPage() {
         const updatedUserData = await getAllData(userAuth.id, userAuth.token);
+        updatedUserData.filteredTransactions = userData.filteredTransactions;
         setUserData(updatedUserData);
     }
 
